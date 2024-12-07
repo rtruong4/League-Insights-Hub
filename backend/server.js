@@ -37,12 +37,38 @@ app.get("/get-account", async (req, res) => {
 
     const league = await leagueResponse.json();
 
+    console.log(puuid);
+
     res.status(200).json(league);
   } catch (error) {
     console.log(`GET route: error getting account, ${error.message}`);
   }
 });
 
+// get top champtions played from account
+app.get("/get-account-champions", async (req, res) => {
+  try {
+    const { gameName, tagLine } = req.body;
+
+    const accountResponse = await fetch(
+      `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}?api_key=${api_key}`
+    );
+
+    const account = await accountResponse.json();
+
+    const puuid = account.puuid;
+
+    const championMasteryResponse = await fetch(
+      `https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${puuid}/top?api_key=${api_key}`
+    );
+
+    const champions = await championMasteryResponse.json();
+
+    res.status(200).json(champions);
+  } catch (error) {
+    console.log(`GET route: error getting account, ${error.message}`);
+  }
+});
 app.listen(port, () => {
   console.log(`Express Server listening on Port ${port}`);
 });
