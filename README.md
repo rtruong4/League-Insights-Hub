@@ -1,10 +1,11 @@
 # insights.gg
 
-1. download dependencies first:
-   cd backend
-   npm init -y
-   npm i express
-   npm install --save-dev nodemon
+1. Download dependencies first:<br>
 
-2. to run server:
-   npm run dev
+   - cd backend<br>
+   - npm init -y<br>
+   - npm i express<br>
+   - npm install --save-dev nodemon<br><br>
+
+2. To run the server:<br>
+   - npm run dev
