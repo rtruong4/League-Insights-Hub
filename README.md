@@ -1,4 +1,4 @@
-# insights.gg
+# League Insights Hub
 
 1. Download dependencies first:<br>
 
