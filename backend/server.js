@@ -29,23 +29,28 @@ const getAccountData = async (gameName, tagLine) => {
     );
     const puuid = accountData.puuid;
 
-    // 2. Get encrypted summoner id using encrypted account puuid
+    // 2. Feature # 1 - Get Account ProfileIconId, Summoner Level
     const summonerData = await fetchData(
       `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${api_key}`
     );
+
+    // 3. Get encrypted summoner id using encrypted account puuid
     const encryptedSummonerId = summonerData.id;
 
-    // 3. Get Account Tier, Rank, League Points, Wins, Losses by encrypted summoner id
+    // 4. Feature # 2 - Get Account Tier, Rank, League Points, Wins, Losses by encrypted summoner id
     const leagueEntries = await fetchData(
       `https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedSummonerId}?api_key=${api_key}`
     );
 
-    // 4. Get Account Top 3 Champions by Master (Descending)
+    // 5. Feature # 3 - Get Account Top 3 Champions by Master (Descending)
     const champions = await fetchData(
       `https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${puuid}/top?api_key=${api_key}`
     );
 
     return {
+      gameName,
+      tagLine,
+      summonerData,
       leagueEntries,
       champions,
     };
@@ -57,7 +62,7 @@ const getAccountData = async (gameName, tagLine) => {
 };
 
 // GET: Fetch Account Metadata
-app.get("/get-account", async (req, res) => {
+app.get("/account-data", async (req, res) => {
   try {
     const { gameName, tagLine } = req.body;
 
