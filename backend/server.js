@@ -10,7 +10,7 @@ app.use(express.json());
 
 // routes
 
-// get account by riot id
+// GET: Account Tier & Rank, Account Win, Account Loss
 app.get("/get-account", async (req, res) => {
   try {
     const { gameName, tagLine } = req.body;
@@ -37,15 +37,13 @@ app.get("/get-account", async (req, res) => {
 
     const league = await leagueResponse.json();
 
-    console.log(puuid);
-
     res.status(200).json(league);
   } catch (error) {
     console.log(`GET route: error getting account, ${error.message}`);
   }
 });
 
-// get top champtions played from account
+// GET: Account Top 3 Champions (Mastery), Champion Id, Champion Level, Champion Points
 app.get("/get-account-champions", async (req, res) => {
   try {
     const { gameName, tagLine } = req.body;
@@ -69,6 +67,7 @@ app.get("/get-account-champions", async (req, res) => {
     console.log(`GET route: error getting account, ${error.message}`);
   }
 });
+
 app.listen(port, () => {
   console.log(`Express Server listening on Port ${port}`);
 });
