@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const { api_key } = require("./config.js");
 
 // port
@@ -7,6 +8,7 @@ const port = 5001;
 
 // middleware
 app.use(express.json());
+app.use(cors());
 
 // Utility function to fetch metadata
 const fetchData = async (url) => {
@@ -61,8 +63,8 @@ const getAccountData = async (gameName, tagLine) => {
   }
 };
 
-// GET: Fetch Account Metadata
-app.get("/account-data", async (req, res) => {
+// POST: Fetch Account Metadata
+app.post("/account-data", async (req, res) => {
   try {
     const { gameName, tagLine } = req.body;
 
